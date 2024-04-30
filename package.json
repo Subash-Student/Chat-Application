@@ -14,7 +14,10 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "format": "prettier --write src/**/*.{js,jsx}"
+    "format": "prettier --write src/**/*.{js,jsx}",
+    "lint": "eslint src/**/*.js",
+    "format:lint": "npm run format && npm run lint",
+    "clear": "rimraf build"
   },
   "eslintConfig": {
     "extends": [

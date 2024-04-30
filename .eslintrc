@@ -1,32 +1,52 @@
+// {
+//   "extends": [
+//     "eslint:recommended",
+//     "plugin:react/recommended",
+//     "plugin:react/jsx-runtime",
+//     "prettier"
+//   ],
+//   "plugins": ["react-hooks"],
+//   "env": {
+//     "browser": true,
+//     "es6": true,
+//     "node": true
+//   },
+//   "parserOptions": {
+//     "ecmaVersion": 2021,
+//     "ecmaFeatures": {
+//       "jsx": true
+//     },
+//     "sourceType": "module"
+//   },
+//   "settings": {
+//     "react": {
+//       "version": "detect"
+//     }
+//   },
+//   "rules": {
+//     "react/prop-types": "off",
+//     "react-hooks/rules-of-hooks": "error",
+//     "react-hooks/exhaustive-deps": "warn",
+//     "no-unused-vars": "warn"
+//   }
+// }
 {
-  "extends": [
-    "eslint:recommended",
-    "plugin:react/recommended",
-    "plugin:react/jsx-runtime",
-    "prettier"
-  ],
+  "extends": ["eslint:recommended", "airbnb", "prettier", "prettier/react"],
   "plugins": ["react-hooks"],
   "env": {
-    "browser": true,
-    "es6": true,
-    "node": true
+    "browser": true
   },
-  "parserOptions": {
-    "ecmaVersion": 2021,
-    "ecmaFeatures": {
-      "jsx": true
-    },
-    "sourceType": "module"
-  },
-  "settings": {
-    "react": {
-      "version": "detect"
-    }
-  },
+  "parser": "babel-eslint",
   "rules": {
-    "react/prop-types": "off",
+    "no-plusplus": [0],
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "react/prop-types": [0],
+    "react/jsx-props-no-spreading": [0],
+    "import/prefer-default-export": [0],
+    "react/no-array-index-key": [0],
+    "react/no-danger": [0],
+    "no-param-reassign": [0],
     "react-hooks/rules-of-hooks": "error",
-    "react-hooks/exhaustive-deps": "warn",
-    "no-unused-vars": "warn"
+    "react-hooks/exhaustive-deps": "warn"
   }
 }
