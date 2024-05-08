@@ -1,7 +1,7 @@
 
-import { Redirect, Route } from 'react-router-dom/cjs/react-router-dom.min';
+import { Redirect, Route } from 'react-router-dom';
 
-export const PrivateRoute = ({children , ...routProps}) => {
+ const PrivateRoute = ({children , ...routProps}) => {
 
     const profile = false;
 
@@ -14,3 +14,5 @@ export const PrivateRoute = ({children , ...routProps}) => {
     <Route {...routProps}>{children}</Route>
   )
 }
+
+export default PrivateRoute;

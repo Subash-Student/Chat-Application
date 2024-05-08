@@ -1,11 +1,11 @@
 
-import { Redirect, Route } from 'react-router-dom/cjs/react-router-dom.min';
+import { Redirect, Route } from 'react-router-dom';
 
-export const PublicRoute = ({children , ...routProps}) => {
+ const PublicRoute = ({children , ...routProps}) => {
 
     const profile = false;
 
-    if(!profile){
+    if(profile){
       return  <Redirect to="/" />
     }
 
@@ -14,3 +14,5 @@ export const PublicRoute = ({children , ...routProps}) => {
     <Route {...routProps}>{children}</Route>
   )
 }
+
+export default PublicRoute;
