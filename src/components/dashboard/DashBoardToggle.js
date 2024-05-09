@@ -15,7 +15,6 @@ const onSignOut = ()=>{
     
 }
 
-
 const{isOpen,open,close} = useModel();
 const isMobile = useMediaQuery('(max-width: 992px)');
 
