@@ -2,7 +2,6 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { auth, database } from "../misc/firebase";
 
 
-
 const profileContext =createContext();
 
 export const ProfileProvider = ({children})=>{

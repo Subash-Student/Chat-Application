@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react"
+import { useCallback, useState,useEffect } from "react"
 
 
 const useModel = (defaultValue = false) => {
@@ -12,3 +12,23 @@ const close = useCallback(()=>setIsOpen(false),[]);
 }
 
 export default useModel;
+
+
+export const useMediaQuery = query => {
+    const [matches, setMatches] = useState(
+      () => window.matchMedia(query).matches
+    );
+  
+    useEffect(() => {
+      const queryList = window.matchMedia(query);
+      setMatches(queryList.matches);
+  
+      const listener = evt => setMatches(evt.matches);
+  
+      queryList.addListener(listener);
+      return () => queryList.removeListener(listener);
+    }, [query]);
+  
+    return matches;
+  };
+  
