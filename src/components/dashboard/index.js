@@ -1,6 +1,7 @@
 import {Drawer,Button} from 'rsuite';
 import { useProfile } from '../../context/profile.context';
 import EditableDashBoard from '../EditableDashBoard';
+import ProviderBlock from './ProviderBlock';
 
  const DashBoard = ({onSignOut}) => {
 
@@ -18,6 +19,8 @@ import EditableDashBoard from '../EditableDashBoard';
 
         <Drawer.Body>
      <h2>{profile.name}</h2>
+     <ProviderBlock />
+     
      <EditableDashBoard 
      name ="nick name"
      initialValue ={profile.name}
