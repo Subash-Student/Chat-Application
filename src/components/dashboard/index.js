@@ -1,7 +1,9 @@
-import {Drawer,Button} from 'rsuite';
+import {Drawer,Button,Divider} from 'rsuite';
 import { useProfile } from '../../context/profile.context';
 import EditableDashBoard from '../EditableDashBoard';
 import ProviderBlock from './ProviderBlock';
+import AvatarUpload from './AvatarUpload';
+
 
  const DashBoard = ({onSignOut}) => {
 
@@ -18,16 +20,17 @@ import ProviderBlock from './ProviderBlock';
         </Drawer.Header>
 
         <Drawer.Body>
-     <h2>{profile.name}</h2>
+     <h2>Hey, {profile.name}</h2>
      <ProviderBlock />
-     
+     <Divider />
      <EditableDashBoard 
      name ="nick name"
      initialValue ={profile.name}
      onSave = {onSave}
      label={<h6 className='mb-2'>Nick Name</h6>}
-     
-     />    
+     />   
+
+     <AvatarUpload /> 
         </Drawer.Body>
 
         <Drawer.Footer>
