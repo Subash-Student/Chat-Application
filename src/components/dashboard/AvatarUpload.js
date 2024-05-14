@@ -4,6 +4,7 @@ import AvatarEditor from 'react-avatar-editor'
 import { useState ,useRef} from 'react';
 import { database, storage } from '../../misc/firebase';
 import { useProfile } from '../../context/profile.context';
+import ProfileAvatar from './ProfileAvatar';
 
 const AvatarAcceeptType = '.png, .jpeg, .jpg' ;
 const acceptedFileType=['image/png','image/jpeg','image/pjpeg'];
@@ -81,7 +82,8 @@ const onUploadAvatar =async()=>{
   return (
     <div className="mt-3 text-center">
 
-
+    <ProfileAvatar src={profile.avatar} name={profile.name} className='height-200 width-200 img-fullsize font-huge'/>
+       
 <div>
     <label htmlFor="Avatar" className="d-block cursor-pointer padded">
         Select An Avatar
