@@ -1,4 +1,4 @@
-import {  createContext, useEffect, useState } from "react";
+import {  createContext, useContext, useEffect, useState } from "react";
 import { database } from "../misc/firebase";
 import { transformToArrayWithId } from "../misc/helper";
 
@@ -26,3 +26,5 @@ return(
 )
     
 }
+
+export const useRooms = ()=> useContext(RoomContext);
