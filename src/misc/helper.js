@@ -9,3 +9,10 @@ if(splitName.length >1){
 }
 
 }
+
+export const transformToArrayWithId=(snap)=>{
+    return snap ? Object.keys(snap).map(roomid =>{
+        return {...snap[roomid],id:roomid}
+    }) : []
+
+}

@@ -1,5 +1,5 @@
 import {Avatar} from 'rsuite';
-import { getNameInitial } from '../../misc/InitialName';
+import { getNameInitial } from '../../misc/helper';
 
 const ProfileAvatar = ({name , ...avatarProps}) => {
   return (
