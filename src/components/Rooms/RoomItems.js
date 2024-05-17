@@ -1,5 +1,6 @@
 import TimeAgo from 'timeago-react'
 
+
 const RoomItems = ({room}) => {
 
     const{createAt,name} = room;
@@ -16,6 +17,7 @@ const RoomItems = ({room}) => {
             <p className='d-flex align-item-center text-black-70'> No message yet...</p>
         </div>
     </div>
+    
   )
 }
 
