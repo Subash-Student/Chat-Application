@@ -1,6 +1,7 @@
 import {Button,Modal} from 'rsuite'
 import { useCurrentRoom } from '../../../context/current.room.context'
 import useModel from '../../../misc/custom-hook';
+import { memo } from 'react';
 
 const RoomInformationModal = () => {
 
@@ -31,4 +32,4 @@ const RoomInformationModal = () => {
   )
 }
 
-export default RoomInformationModal
+export default memo( RoomInformationModal );
