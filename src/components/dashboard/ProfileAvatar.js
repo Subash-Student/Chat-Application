@@ -9,4 +9,4 @@ const ProfileAvatar = ({name , ...avatarProps}) => {
   )
 }
 
-export default ProfileAvatar
+export default ProfileAvatar;
