@@ -5,6 +5,7 @@ import { useState ,useRef} from 'react';
 import { database, storage } from '../../misc/firebase';
 import { useProfile } from '../../context/profile.context';
 import ProfileAvatar from './ProfileAvatar';
+import { getUserUpdates } from '../../misc/helper';
 
 const AvatarAcceeptType = '.png, .jpeg, .jpg' ;
 const acceptedFileType=['image/png','image/jpeg','image/pjpeg'];
@@ -63,9 +64,9 @@ const onUploadAvatar =async()=>{
 
        const downloadUrl = await uploadAvatarResult.ref.getDownloadURL();
         
-       const useAvatarRef= database.ref(`/profile/${profile.uid}`).child('avatar');
+       const updates = await getUserUpdates(profile.uid,'avatar',downloadUrl,database);
 
-       useAvatarRef.set(downloadUrl);
+           await database.ref().update(updates);
 
        Alert.success("Avatar Succesfully Updated");
         setIsLoading(false);

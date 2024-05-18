@@ -1,16 +1,32 @@
-import {Drawer,Button,Divider} from 'rsuite';
+import {Drawer,Button,Divider,Alert} from 'rsuite';
+import { database } from '../../misc/firebase';
 import { useProfile } from '../../context/profile.context';
 import EditableDashBoard from '../EditableDashBoard';
 import ProviderBlock from './ProviderBlock';
 import AvatarUpload from './AvatarUpload';
+import { getUserUpdates } from '../../misc/helper';
+
+
 
 
  const DashBoard = ({onSignOut}) => {
 
     const {profile} = useProfile();
+    
+ 
   
-    const onSave =(newData)=>{
+    const onSave = async(newData)=>{
         console.log(newData);
+        try {
+         
+           const updates = await getUserUpdates(profile.uid,'name',newData,database);
+           await database.ref().update(updates);
+          
+          Alert.success("Nickname Updated Succesfully");
+
+        } catch (error) {
+          Alert.error(error.message,4000)
+        }
     }
 
   return (
