@@ -10,7 +10,7 @@ const RoomItems = ({room}) => {
             <h3 className='text-disappear'>{name}</h3>
             <TimeAgo 
             datetime = {lastMessage? new Date(lastMessage.createAt) :new Date(createAt)}
-          className='text-normal text-black-40'  />
+          className='font-normal text-black-40'  />
         </div>
 
         <div className='d-flex align-item-center text-black-70'>
