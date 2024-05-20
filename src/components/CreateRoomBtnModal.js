@@ -2,7 +2,7 @@ import {Button,Form,Modal,Icon,FormGroup,ControlLabel,FormControl,Schema,Alert} 
 import useModel from '../misc/custom-hook'
 import { useCallback, useRef, useState } from 'react';
 import firebase from'firebase';
-import { database } from '../misc/firebase';
+import { auth, database } from '../misc/firebase';
 
 
 const INITIAL_FORM= {
@@ -38,6 +38,9 @@ const onSubmit=async()=>{
       const newRoomData = {
         ...formValue,
         createAt:firebase.database.ServerValue.TIMESTAMP,
+        admins:{
+          [auth.currentUser.uid] : true
+        }
       }
       try {
         await database.ref('rooms').push(newRoomData);

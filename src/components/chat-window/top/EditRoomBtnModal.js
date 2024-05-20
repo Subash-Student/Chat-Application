@@ -1,7 +1,6 @@
-import React from 'react'
 import {Button,Drawer,Alert} from 'rsuite'
 import { useParams } from 'react-router'
-import useModel from '../../../misc/custom-hook'
+import useModel, { useMediaQuery } from '../../../misc/custom-hook'
 import EditableDashBoard from '../../EditableDashBoard'
 import { database } from '../../../misc/firebase'
 import { useCurrentRoom } from '../../../context/current.room.context'
@@ -13,6 +12,7 @@ const EditRoomBtnModal = () => {
 
 const{isOpen,open,close} = useModel();
 const {chatId} = useParams();
+const isMobile = useMediaQuery('(max-width: 992px)');
 const name = useCurrentRoom(v => v.name);
 const description = useCurrentRoom(v=>v.description);
 
@@ -42,7 +42,7 @@ const onDescriptionSave = (newName)=>{
             A
          </Button>
 
-         <Drawer show={isOpen} onHide={close}>
+         <Drawer full={isMobile} show={isOpen} onHide={close}>
 
             <Drawer.Header>
                 <Drawer.Title>Edit Room Details</Drawer.Title>

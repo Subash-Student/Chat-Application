@@ -20,6 +20,7 @@ export const ProfileProvider = ({children})=>{
 
     const[profile,setProfile]=useState(null);
     const[isLoading,setIsLoading] = useState(true);
+    
 
     useEffect(()=>{
 
@@ -28,6 +29,7 @@ export const ProfileProvider = ({children})=>{
 
        const authUnSub = auth.onAuthStateChanged(authObj =>{
             if(authObj){
+                
                  userStatusRef = database.ref(`/status/${authObj.uid}`);
                  useRef =  database.ref(`/profile/${authObj.uid}`)
                  useRef.on('value',snap =>{
