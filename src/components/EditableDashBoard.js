@@ -6,8 +6,9 @@ const EditableDashBoard = ({initialValue ,
     onSave, 
     label = null , 
     plsceholder = "Write Your Value", 
-    emtyMsg ="Empty Message"},
-    ...inputProps
+    emtyMsg ="Empty Message",
+    ...inputProps}
+    
 ) => {
 
 const [input ,setInput] = useState(initialValue);
@@ -39,7 +40,7 @@ const onSaveData = async()=>{
 
 
   return (
-    <div>
+    <div className='mt-3'>
         {label}
         <InputGroup >
         <Input
@@ -47,7 +48,8 @@ const onSaveData = async()=>{
         plsceholder={plsceholder}
         disabled={!isEditable}
         value={input}
-         onChange={onInputChange}/>
+         onChange={onInputChange}
+         />
 
 <InputGroup.Button onClick={onEditClick}>
     <Icon  icon={isEditable ? 'close' : 'edit2'}/>

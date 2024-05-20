@@ -5,7 +5,6 @@ import { usePresence } from '../misc/custom-hook'
 const PresenceDot = ({uid}) => {
 
     const presence = usePresence(uid);
-    console.log(presence)
     const getColor =(presence)=>{
    
         if(!presence){

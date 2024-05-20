@@ -4,6 +4,7 @@ import { useCurrentRoom } from '../../../context/current.room.context';
 import { Link } from 'react-router-dom';
 import { useMediaQuery } from '../../../misc/custom-hook';
 import RoomInformationModal from './RoomInformationModal';
+import EditRoomBtnModal from './EditRoomBtnModal';
 
 const Top = () => {
 
@@ -25,7 +26,7 @@ const isMobile = useMediaQuery('(max-width : 992px)')
         <span className='text-disappear'>{name}</span>
       </h4>
 
-      <ButtonToolbar className='ws-nowrap'>todo</ButtonToolbar>
+      <ButtonToolbar className='ws-nowrap'><EditRoomBtnModal /></ButtonToolbar>
       </div>
       <div className='d-flex justify-content-between align-items-center'>
         <span>todo</span>
