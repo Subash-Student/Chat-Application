@@ -7,6 +7,7 @@ import { useCurrentRoom } from '../../../context/current.room.context';
 import { memo } from 'react';
 import { auth } from '../../../misc/firebase';
 import { useHover } from '@uidotdev/usehooks';
+import IconBtnControl from './IconBtnControl';
 
 const MessageItem = ({message,handleAdmin}) => {
 
@@ -39,6 +40,15 @@ const MessageItem = ({message,handleAdmin}) => {
             datetime = {createAt}
           className='font-normal text-black-40 ml-2'  />
 
+           <IconBtnControl
+          //  {...( ? {color : 'red'} : {})}
+           isVisible
+           iconName = 'heart'
+           tooltip = 'Like'
+           onClick={()=>{}}
+           badgeContent ={5}
+           />
+               
      </div>
 
 <div><span className='word-break-all'>{text}</span></div>
