@@ -8,7 +8,7 @@ const PresenceDot = ({uid}) => {
     const getColor =(presence)=>{
    
         if(!presence){
-            return 'gray';
+            return ;
         }
 
         switch(presence.state){
@@ -17,7 +17,7 @@ const PresenceDot = ({uid}) => {
             case 'offline':
                 return 'red';
             default :
-                return 'gray'
+                return 
         }
     }
 

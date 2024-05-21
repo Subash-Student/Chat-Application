@@ -5,15 +5,18 @@ import { Link } from 'react-router-dom';
 import { useMediaQuery } from '../../../misc/custom-hook';
 import RoomInformationModal from './RoomInformationModal';
 import EditRoomBtnModal from './EditRoomBtnModal';
+import { database } from '../../../misc/firebase';
 
 const Top = () => {
 
 
   const name = useCurrentRoom(v => v.name);
   const isAdmin = useCurrentRoom(v=>v.isAdmin);
+  const isMobile = useMediaQuery('(max-width : 992px)')
+
+
  
 
-const isMobile = useMediaQuery('(max-width : 992px)')
 
   return (
     <div>

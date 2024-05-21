@@ -1,4 +1,3 @@
-import React from 'react'
 import {Button,Modal} from 'rsuite';
 import useModel from '../../../misc/custom-hook';
 import ProfileAvatar from '../../dashboard/ProfileAvatar';
@@ -6,7 +5,7 @@ import ProfileAvatar from '../../dashboard/ProfileAvatar';
 
 
 
-const ProfileBtnInfo = ({profile , ...btnProps}) => {
+const ProfileBtnInfo = ({profile ,children, ...btnProps}) => {
 
     const shortName = profile.name.split(' ')[0];
     const{isOpen,open,close} = useModel();
@@ -34,7 +33,8 @@ const ProfileBtnInfo = ({profile , ...btnProps}) => {
 
             </Modal.Body>
             <Modal.Footer>
-                  <Button block color='gray' onClick={close}> 
+                    {children}
+                  <Button block  onClick={close}> 
                      Close
                   </Button>
             </Modal.Footer>

@@ -4,6 +4,7 @@ import useModel, { useMediaQuery } from '../../../misc/custom-hook'
 import EditableDashBoard from '../../EditableDashBoard'
 import { database } from '../../../misc/firebase'
 import { useCurrentRoom } from '../../../context/current.room.context'
+import { memo } from 'react'
 
 
 
@@ -78,4 +79,4 @@ const onDescriptionSave = (newName)=>{
   )
 }
 
-export default EditRoomBtnModal
+export default memo(EditRoomBtnModal) 
