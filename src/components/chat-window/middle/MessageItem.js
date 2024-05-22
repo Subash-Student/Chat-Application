@@ -8,12 +8,29 @@ import { memo } from 'react';
 import { auth } from '../../../misc/firebase';
 import { useHover ,useMediaQuery} from '@uidotdev/usehooks';
 import IconBtnControl from './IconBtnControl';
+import ImageBtnModal from './ImageBtnModal';
+
+
+const renderFile=(file)=>{
+
+  if(file.contentType.includes('image')){
+
+    return (<div className="height-220">
+      <ImageBtnModal src={file.url} name={file.name}/>
+    </div>)
+  }
+
+
+  return <a href={file.url}> Download [ {file.name} ]</a>
+}
+
+
 
 
 
 const MessageItem = ({message,handleAdmin,handleLike,handleDelete}) => {
 
-    const {author,createAt,text,likes,likeCount} = message;
+    const {author,createAt,text,file,likes,likeCount} = message;
     const [ref, hovering] = useHover();
     
     const isMobile = useMediaQuery(
@@ -29,7 +46,8 @@ const MessageItem = ({message,handleAdmin,handleLike,handleDelete}) => {
     const canGrantAdmin = isAdmin && !isAuthor;
 
     const isLiked = likes && Object.keys(likes).includes(auth.currentUser.uid);
-     
+
+  
   return (
     <li className={`padded mb-1 cursor-pointer ${hovering ? 'bg-black-02' :''}`} ref={ref}>
 
@@ -70,7 +88,10 @@ const MessageItem = ({message,handleAdmin,handleLike,handleDelete}) => {
                
      </div>
 
-<div><span className='word-break-all'>{text}</span></div>
+<div><span className='word-break-all'>
+  {text && text}
+  {file && renderFile(file)}
+  </span></div>
     </li>
 )
 }
