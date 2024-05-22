@@ -6,20 +6,29 @@ import PresenceDot from '../../PresenceDot';
 import { useCurrentRoom } from '../../../context/current.room.context';
 import { memo } from 'react';
 import { auth } from '../../../misc/firebase';
-import { useHover } from '@uidotdev/usehooks';
+import { useHover ,useMediaQuery} from '@uidotdev/usehooks';
 import IconBtnControl from './IconBtnControl';
 
-const MessageItem = ({message,handleAdmin}) => {
 
-    const {author,createAt,text} = message;
+
+const MessageItem = ({message,handleAdmin,handleLike}) => {
+
+    const {author,createAt,text,likes,likeCount} = message;
     const [ref, hovering] = useHover();
     
+    const isMobile = useMediaQuery(
+      "only screen and (min-width : 769px) and (max-width : 992px)"
+    );
+    const canShow = isMobile || hovering ;
+
     const isAdmin = useCurrentRoom(v => v.isAdmin);
     const admins = useCurrentRoom(v => v.admins);
   
     const isMsgAuthorAdmin = admins.includes(author.uid);
     const isAuthor = auth.currentUser.uid === author.uid;
     const canGrantAdmin = isAdmin && !isAuthor;
+
+    const isLiked = likes && Object.keys(likes).includes(auth.currentUser.uid);
      
   return (
     <li className={`padded mb-1 cursor-pointer ${hovering ? 'bg-black-02' :''}`} ref={ref}>
@@ -41,12 +50,12 @@ const MessageItem = ({message,handleAdmin}) => {
           className='font-normal text-black-40 ml-2'  />
 
            <IconBtnControl
-          //  {...( ? {color : 'red'} : {})}
-           isVisible
+           {...(isLiked ? { color: 'red' } : {})}
+           isVisible ={canShow}
            iconName = 'heart'
            tooltip = 'Like'
-           onClick={()=>{}}
-           badgeContent ={5}
+           onClick={()=> handleLike(message.id)}
+           badgeContent ={likeCount}
            />
                
      </div>
