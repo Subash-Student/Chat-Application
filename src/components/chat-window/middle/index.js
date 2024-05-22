@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useParams } from 'react-router'
 import {Alert} from 'rsuite'
 import {auth, database } from '../../../misc/firebase';
@@ -89,7 +89,40 @@ const handleLike = useCallback(
   },
   [],
 )
+const handleDelete = useCallback(
+ async (msgId)=>{
+      
+    const isLast = message[message.length - 1].id === msgId ;
+   
+    if (!window.confirm('Delete this message?')) {
+      return;
+    }
+    
+    const updates={};
 
+     updates[`/messages/${msgId}`] = null ;
+
+     if(isLast && message.length > 1 ){
+      updates[`rooms/${chatId}/lastMessage`] = {
+        ...message[message.length - 2],
+        msgId : message[message.length -2].id,
+      }
+     }
+
+     if(isLast && message.length === 1 ){
+      updates[`rooms/${chatId}/lastMessage`] = null ;
+     }
+    
+     try {
+      
+      await database.ref().update(updates);
+      Alert.info('Message Deleted',4000);
+     } catch (error) {
+      Alert.info(error.message,4000);
+     }
+
+  },[chatId,message]
+)
 
 
 
@@ -102,7 +135,14 @@ const handleLike = useCallback(
     }
 
 {showMessage &&   
-message.map(message => <MessageItem key={message.id} message ={message} handleAdmin={handleAdmin} handleLike={handleLike}/>)
+message.map(message =>
+   <MessageItem
+   key={message.id} 
+   message ={message}
+    handleAdmin={handleAdmin}
+     handleLike={handleLike}
+     handleDelete={handleDelete}
+     />)
   }
     </ul>
    

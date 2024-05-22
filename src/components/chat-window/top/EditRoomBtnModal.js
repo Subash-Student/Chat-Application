@@ -70,7 +70,7 @@ const onDescriptionSave = (newName)=>{
             </Drawer.Body>
 
             <Drawer.Footer>
-                <Button block color='gray' onClick={close}>
+                <Button block  onClick={close}>
                     Close
                 </Button>
             </Drawer.Footer>

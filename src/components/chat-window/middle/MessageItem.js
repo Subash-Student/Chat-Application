@@ -11,7 +11,7 @@ import IconBtnControl from './IconBtnControl';
 
 
 
-const MessageItem = ({message,handleAdmin,handleLike}) => {
+const MessageItem = ({message,handleAdmin,handleLike,handleDelete}) => {
 
     const {author,createAt,text,likes,likeCount} = message;
     const [ref, hovering] = useHover();
@@ -57,6 +57,16 @@ const MessageItem = ({message,handleAdmin,handleLike}) => {
            onClick={()=> handleLike(message.id)}
            badgeContent ={likeCount}
            />
+           {isAuthor && 
+           <IconBtnControl
+           isVisible ={canShow}
+           iconName = 'close'
+           tooltip = 'Delete'
+           onClick={()=> handleDelete(message.id)}
+          
+           />
+
+           }
                
      </div>
 
