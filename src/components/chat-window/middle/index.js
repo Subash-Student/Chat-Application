@@ -1,35 +1,105 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useState,useRef } from 'react'
 import { useParams } from 'react-router'
-import {Alert} from 'rsuite'
+import {Alert,Button} from 'rsuite'
 import {auth, database, storage } from '../../../misc/firebase';
 import { transformToArrayWithId,groupBy } from '../../../misc/helper';
 import MessageItem from './MessageItem';
+
+
+
+const PAGE_SIZE = 15;
+
+const messageRef = database.ref('messages');
+
+function shouldScrollToBottom(node, threshold = 30) {
+  const percentage =
+    (100 * node.scrollTop) / (node.scrollHeight - node.clientHeight) || 0;
+
+  return percentage > threshold;
+}
+
 
 const Message = () => {
 
 const {chatId} = useParams();
 const[message,setMessage] = useState(null);
+const [limit, setLimit] = useState(PAGE_SIZE);
+const selfRef = useRef();
 
 const isMsgEmpty = message && message.length === 0 ;
 const showMessage = message && message.length > 0 ;
 
-useEffect(()=>{
+const loadMessages = useCallback(
+  limitToUse => {
+    const node = selfRef.current;
 
-  const messageRef = database.ref('messages');
-
- messageRef.orderByChild(`roomId`).equalTo(chatId).on('value',(snap)=>{
-
-  const data = transformToArrayWithId(snap.val());
-  
-  setMessage(data)
-
-  return ()=>{
     messageRef.off()
-  }
 
- })
+    // onValue(
+    //   query(
+    //     messageRef,
+    //     orderByChild('roomId'),
+    //     equalTo(chatId),
+    //     limitToLast(limitToUse || PAGE_SIZE)
+    //   ),
+    messageRef.orderByChild('roomId').equalTo(chatId).limitToLast(limitToUse || PAGE_SIZE).on('value',
+      snap => {
+        const data = transformToArrayWithId(snap.val());
+        setMessage(data);
 
-},[chatId])
+        if (shouldScrollToBottom(node)) {
+          node.scrollTop = node.scrollHeight;
+        }
+      }
+    );
+
+    setLimit(p => p + PAGE_SIZE);
+  },
+  [chatId]
+);
+
+const onLoadMore = useCallback(() => {
+  const node = selfRef.current;
+  const oldHeight = node.scrollHeight;
+
+  loadMessages(limit);
+
+  setTimeout(() => {
+    const newHeight = node.scrollHeight;
+    node.scrollTop = newHeight - oldHeight;
+  }, 200);
+}, [loadMessages, limit]);
+
+useEffect(() => {
+  const node = selfRef.current;
+
+  loadMessages();
+
+  setTimeout(() => {
+    node.scrollTop = node.scrollHeight;
+  }, 200);
+
+  return () => {
+    messageRef.off()
+  };
+}, [loadMessages]);
+// useEffect(()=>{
+
+//   const messageRef = database.ref('messages');
+
+//  messageRef.orderByChild(`roomId`).equalTo(chatId).on('value',(snap)=>{
+
+//   const data = transformToArrayWithId(snap.val());
+  
+//   setMessage(data)
+
+//   return ()=>{
+//     messageRef.off()
+//   }
+
+//  })
+
+// },[chatId])
 
 const handleAdmin = useCallback(async(uid)=>{
     
@@ -94,9 +164,9 @@ const handleDelete = useCallback(
       
     const isLast = message[message.length - 1].id === msgId ;
    
-    if (!window.confirm('Delete this message?')) {
-      return;
-    }
+    // if (!window.confirm('Delete this message?')) {
+    //   return;
+    // }
     
     const updates={};
 
@@ -116,7 +186,7 @@ const handleDelete = useCallback(
      try {
       
       await database.ref().update(updates);
-      Alert.info('Message Deleted',4000);
+      Alert.info('Message Deleted');
      } catch (error) {
       Alert.info(error.message,4000);
      }
@@ -127,7 +197,7 @@ const handleDelete = useCallback(
         await fileRef.delete();
         
       } catch (error) {
-        Alert.info("Message,Deleted",4000)
+        Alert.info("Message,Deleted")
       }
      }
 
@@ -170,8 +240,14 @@ const renderMessages = () => {
 
   return (
     <>
-    <ul className='msg-list custom-scroll'>
-
+    <ul className='msg-list custom-scroll' ref={selfRef}>
+    {message && message.length >= PAGE_SIZE && (
+        <li className="text-center mt-2 mb-2">
+          <Button onClick={onLoadMore} color="green">
+            Load more
+          </Button>
+        </li>
+      )}
     {isMsgEmpty &&
     <li>No Messages Yet...</li>
     }
