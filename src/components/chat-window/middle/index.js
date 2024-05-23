@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import { useParams } from 'react-router'
 import {Alert} from 'rsuite'
-import {auth, database } from '../../../misc/firebase';
+import {auth, database, storage } from '../../../misc/firebase';
 import { transformToArrayWithId } from '../../../misc/helper';
 import MessageItem from './MessageItem';
 
@@ -90,7 +90,7 @@ const handleLike = useCallback(
   [],
 )
 const handleDelete = useCallback(
- async (msgId)=>{
+ async (msgId,file)=>{
       
     const isLast = message[message.length - 1].id === msgId ;
    
@@ -120,6 +120,19 @@ const handleDelete = useCallback(
      } catch (error) {
       Alert.info(error.message,4000);
      }
+
+     if(file){
+      try {
+        const fileRef = storage.refFromURL(file.url);
+        await fileRef.delete();
+        
+      } catch (error) {
+        Alert.info("Message,Deleted",4000)
+      }
+     }
+
+
+
 
   },[chatId,message]
 )
