@@ -241,6 +241,12 @@ const renderMessages = () => {
   return (
     <>
     <ul className='msg-list custom-scroll' ref={selfRef}>
+    {isMsgEmpty &&
+    <li>No Messages Yet...</li>
+    }
+
+{showMessage && renderMessages()}
+    </ul>
     {message && message.length >= PAGE_SIZE && (
         <li className="text-center mt-2 mb-2">
           <Button onClick={onLoadMore} color="green">
@@ -248,13 +254,6 @@ const renderMessages = () => {
           </Button>
         </li>
       )}
-    {isMsgEmpty &&
-    <li>No Messages Yet...</li>
-    }
-
-{showMessage && renderMessages()}
-    </ul>
-   
     </>
   )
 }

@@ -1,15 +1,19 @@
 import {Tag,Button,Icon,Alert} from 'rsuite';
-import { auth ,database} from '../../misc/firebase'
+import { auth} from '../../misc/firebase'
 import { useState } from 'react';
 import firebase from "firebase/app";
 
 
 const ProviderBlock = () => {
 
-const [isConnect,setIsConnect] =useState({
-    "google.com" :auth.currentUser.providerData.some(data => data.providerId === "google.com"),
-    "facebook.com" :auth.currentUser.providerData.some(data => data.providerId === "facebook.com")
-})
+    const [isConnect, setIsConnect] = useState({
+        'google.com': auth.currentUser.providerData.some(
+          data => data.providerId === 'google.com'
+        ),
+        'facebook.com': auth.currentUser.providerData.some(
+          data => data.providerId === 'facebook.com'
+        ),
+      });
 
 const updateIsConnect =(providerId,value)=>{
     setIsConnect(p =>{
@@ -42,21 +46,11 @@ const unLink= async(provider)=>{
 const signInProvider= async(provider)=>{
 
     try {
-      const  {additionalUserInfo,user}= await auth.signInWithPopup(provider);
+     await auth.signInWithPopup(provider);
       Alert.success(" Signed In",4000);
-    
-    if(additionalUserInfo.isNewUser){
-    
-    await database.ref(`/profile/${user.uid}`).set({
-      name: user.displayName,
-      createAt :firebase.database.ServerValue.TIMESTAMP
-    })
-    
-    }
+      updateIsConnect(provider.providerId, true);
     } catch (error) {
-    
       Alert.error(error.message,4000);
-    
     }
     }
 

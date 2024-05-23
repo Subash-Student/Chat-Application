@@ -11,7 +11,7 @@ const DashBoardToggle = () => {
 const onSignOut = useCallback(()=>{
 
   database.ref(`/status/${auth.currentUser.uid}`).set(isOfflineForDatabase).then(()=>{
-    auth.signOut();
+    auth.signOut()
     Alert.info("Sign Out",4000);
     close();
   }).catch(err =>{

@@ -64,15 +64,12 @@ const Bottom = () => {
     }
 
   }
-  const onkey=(ev)=>{
-        if(ev.keyCode == 13){
-          ev.preventDefault();
-          onSendClick();
-        }
-
-    
-
-  }
+  const onKeyDown = ev => {
+    if (ev.keyCode === 13) {
+      ev.preventDefault();
+      onSendClick();
+    }
+  };
 
   const afterUpload = useCallback(
    async (files)=>{
@@ -115,8 +112,12 @@ const Bottom = () => {
          <InputGroup>
          <AttachFiles  afterUpload={afterUpload}/>
          <AudioMsgBtn  afterUpload={afterUpload}/>
-         <Input placeholder='Write A New Message Hear...' value={input} onChange={onInputChange}/>
-         <InputGroup.Button color='blue' onKeyDown={onkey} onClick={onSendClick}  disabled={isLoading}  >
+         <Input placeholder='Write A New Message Hear...' value={input} onChange={onInputChange} onKeyDown={onKeyDown}/>
+         <InputGroup.Button 
+         color='blue'
+        onClick={onSendClick} 
+         disabled={isLoading}
+           >
          <Icon icon='send' />
          </InputGroup.Button>
          </InputGroup>
