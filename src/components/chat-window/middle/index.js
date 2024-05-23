@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { useParams } from 'react-router'
 import {Alert} from 'rsuite'
 import {auth, database, storage } from '../../../misc/firebase';
-import { transformToArrayWithId } from '../../../misc/helper';
+import { transformToArrayWithId,groupBy } from '../../../misc/helper';
 import MessageItem from './MessageItem';
 
 const Message = () => {
@@ -137,6 +137,35 @@ const handleDelete = useCallback(
   },[chatId,message]
 )
 
+const renderMessages = () => {
+  const groups = groupBy(message, item =>
+    new Date(item.createAt).toDateString()
+  );
+
+  const items = [];
+
+  Object.keys(groups).forEach(date => {
+    items.push(
+      <li key={date} className="text-center mb-1 padded">
+        {date}
+      </li>
+    );
+
+    const msgs = groups[date].map(msg => (
+      <MessageItem
+        key={msg.id}
+        message={msg}
+        handleAdmin={handleAdmin}
+        handleLike={handleLike}
+        handleDelete={handleDelete}
+      />
+    ));
+
+    items.push(...msgs);
+  });
+
+  return items;
+};
 
 
   return (
@@ -147,16 +176,7 @@ const handleDelete = useCallback(
     <li>No Messages Yet...</li>
     }
 
-{showMessage &&   
-message.map(message =>
-   <MessageItem
-   key={message.id} 
-   message ={message}
-    handleAdmin={handleAdmin}
-     handleLike={handleLike}
-     handleDelete={handleDelete}
-     />)
-  }
+{showMessage && renderMessages()}
     </ul>
    
     </>
