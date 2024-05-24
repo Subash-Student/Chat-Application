@@ -164,9 +164,9 @@ const handleDelete = useCallback(
       
     const isLast = message[message.length - 1].id === msgId ;
    
-    // if (!window.confirm('Delete this message?')) {
-    //   return;
-    // }
+    if (!window.confirm('Delete this message?')) {
+      return;
+    }
     
     const updates={};
 
