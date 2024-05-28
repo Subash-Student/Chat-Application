@@ -7,10 +7,10 @@ import firebase from "firebase/app";
 const ProviderBlock = () => {
 
     const [isConnect, setIsConnect] = useState({
-        'google.com': auth.currentUser.providerData.some(
+        'google.com': auth.currentUser?.providerData?.some(
           data => data.providerId === 'google.com'
         ),
-        'facebook.com': auth.currentUser.providerData.some(
+        'facebook.com': auth.currentUser?.providerData?.some(
           data => data.providerId === 'facebook.com'
         ),
       });
