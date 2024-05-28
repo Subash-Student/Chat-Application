@@ -8,9 +8,9 @@ import { useMediaQuery } from '../../misc/custom-hook';
 const Home = ()=>{
 
   const isDesktop = useMediaQuery('(min-width : 992px)');
-  const {isExcact} = useRouteMatch();
+  const {isExact} = useRouteMatch();
 
-const isSidebarRender = isDesktop || isExcact ;
+const isSidebarRender = isDesktop || isExact ;
 
   return(
     <RoomsProvider>
